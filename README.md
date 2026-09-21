@@ -1,6 +1,6 @@
-# bewertungsapp-preiss
+# Bewertungsapp – <Vorname Nachname>
 
-Klasse: 4aAPC
+Klasse: <Klasse>
 
 ## Setup
 
