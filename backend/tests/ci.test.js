@@ -11,5 +11,5 @@ test('Express ist als Abhaengigkeit eingetragen', () => {
 });
 
 test('Die Paketdatei hat einen gueltigen Namen', () => {
-  assert.equal(pkg.name, 'falscher-name');
+  assert.equal(pkg.name, 'backend');
 });
