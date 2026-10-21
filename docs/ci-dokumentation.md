@@ -1,42 +1,34 @@
 # Dokumentation – CI/CD mit GitHub Actions
 
 ## Ziel
-Das bestehende Node.js-Backend der Bewertungsapp wird bei jedem Push automatisch getestet. Fehler sollen fruehzeitig erkannt werden.
+Bei jedem Push sollen die Tests unseres Node.js-Backends automatisch ausgeführt werden. So können Fehler frühzeitig erkannt werden.
 
 ## Umsetzung
-Die Workflow-Datei `.github/workflows/ci.yml` definiert eine CI-Pipeline. GitHub Actions startet bei jedem Push einen Ubuntu-Runner, laedt das Repository, richtet Node.js 22 ein, installiert im Ordner `backend` die Abhaengigkeiten mit `npm install` und fuehrt die Tests mit `node --test tests/ci.test.js` aus.
+Die Pipeline ist in `.github/workflows/ci.yml` definiert. GitHub Actions startet den Workflow bei jedem Push; zusätzlich ist ein manueller Start möglich. Auf einem Ubuntu-Runner wird das Repository ausgecheckt, Node.js 22 eingerichtet, im Ordner `backend` werden mit `npm install` die Abhängigkeiten installiert und anschließend mit `node --test tests/ci.test.js` die Tests ausgeführt.
 
-Die Tests in `backend/tests/ci.test.js` ueberpruefen das Startskript, die Express-Abhaengigkeit und den Paketnamen.
+Die drei Tests prüfen, ob das Startskript richtig eingetragen ist, Express als Abhängigkeit vorhanden ist und die `package.json` den erwarteten Namen enthält.
 
-## Erfolgreicher Durchlauf
-Nach dem ersten Commit wurde im Reiter **Actions** geprueft, ob der Workflow erfolgreich abgeschlossen wird. Bei bestandenen Tests ist der Durchlauf gruen.
+## Ablauf und Ergebnis
+**1. Erfolgreicher Durchlauf:** Nach Commit `3b821e4` wurde die Pipeline automatisch gestartet und erfolgreich abgeschlossen. Zuvor bestanden die drei Tests auch lokal.
 
-**Screenshot:** [Hier Screenshot des erfolgreichen Durchlaufs einfuegen.]
+![](screenshots/ci-erfolgreich.png)
 
-## Absichtlich fehlschlagender Test
-Fuer die Fehlerdemonstration wird im dritten Test die erwartete Zeichenfolge `backend` temporaer in `falscher-name` geaendert:
+**2. Fehlerdemonstration:** Im dritten Test wurde absichtlich der erwartete Paketname von `backend` auf `falscher-name` geändert. Nach Commit `39055be` schlug die Pipeline wie erwartet fehl (rotes X). Damit wurde gezeigt, dass ein fehlerhafter Test erkannt wird.
 
-```js
-assert.equal(pkg.name, 'falscher-name');
-```
+![](screenshots/ci-fehlgeschlagen.png)
 
-Nach einem weiteren Commit startet die Pipeline erneut. Der Test schlaegt fehl, weil der tatsaechliche Paketname `backend` ist. Der Durchlauf wird rot als fehlgeschlagen markiert.
+**3. Korrektur:** Der Test wurde wieder auf den richtigen Namen `backend` zurückgesetzt. Nach Commit `88b3698` lief die Pipeline erneut erfolgreich durch.
 
-**Screenshot:** [Hier Screenshot des fehlgeschlagenen Durchlaufs einfuegen.]
-
-Anschliessend wird die Testzeile wieder auf `assert.equal(pkg.name, 'backend');` zurueckgesetzt und erneut gepusht, damit das Repository wieder gruene Tests hat.
+![](screenshots/ci-repariert.png)
 
 ## CI/CD-Begriffe
-- **CI (Continuous Integration):** Automatisches Pruefen neuer Codeaenderungen, z. B. durch Tests nach jedem Push.
-- **CD (Continuous Delivery/Deployment):** Automatisiertes Bereitstellen bzw. Veroeffentlichen von Software. Dies wird in dieser Aufgabe nicht umgesetzt.
-- **Pipeline:** Festgelegte Folge automatisierter Arbeitsschritte.
-- **Workflow:** Konfiguration dieser Schritte als YAML-Datei in GitHub Actions.
-- **Runner:** Rechner bzw. Umgebung, in der die Schritte ausgefuehrt werden.
+- **CI (Continuous Integration):** Codeänderungen werden regelmäßig und automatisch geprüft, zum Beispiel durch Tests nach jedem Push.
+- **CD (Continuous Delivery/Deployment):** Automatische Bereitstellung oder Veröffentlichung von Software. Das wurde in dieser Aufgabe nicht umgesetzt.
+- **Pipeline:** Abfolge automatisierter Arbeitsschritte.
+- **Workflow:** Die YAML-Datei, die die GitHub-Actions-Schritte festlegt.
+- **Runner:** Die Umgebung, auf der die Schritte ausgeführt werden.
 
-## Ergebnis
-Die CI-Pipeline soll erfolgreiche Tests gruen und absichtlich fehlschlagende Tests rot anzeigen. Dadurch werden Fehler automatisch erkannt. Dies ist eine CI-Demonstration; ein Deployment (CD) ist nicht enthalten.
+## Fazit
+Die CI-Pipeline funktioniert. Sie führt Tests nach einem Push automatisch aus, zeigt Fehler an und bestätigt nach der Korrektur wieder einen erfolgreichen Durchlauf.
 
-## Abgabe
-Repository: https://github.com/ItsNadi/bewertungsapp-preiss
-
-Screenshots: Erfolgreicher und fehlgeschlagener GitHub-Actions-Durchlauf.
+**Repository:** https://github.com/ItsNadi/bewertungsapp-preiss
