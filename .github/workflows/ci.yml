@@ -1,0 +1,28 @@
+name: CI - Automatische Tests
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - name: Repository herunterladen
+        uses: actions/checkout@v4
+
+      - name: Node.js einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Abhaengigkeiten installieren
+        run: npm install
+
+      - name: Tests ausfuehren
+        run: node --test tests/ci.test.js
