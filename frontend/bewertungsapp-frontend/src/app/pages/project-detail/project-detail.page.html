@@ -1,0 +1,85 @@
+<ion-header class="app-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/projects" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <span class="title-copy">
+        <strong>Projektdetails</strong>
+        <small>Bewertungsapp</small>
+      </span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="page-content">
+    <p class="state" *ngIf="loading()">Projekt wird geladen ...</p>
+    <p class="state error" *ngIf="error()">{{ error() }}</p>
+
+    <ng-container *ngIf="project() as currentProject">
+      <ion-card class="hero-card">
+        <ion-card-header>
+          <span class="eyebrow">PROJEKTDETAIL</span>
+          <ion-card-title>{{ currentProject.titel }}</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <p class="info-row" *ngIf="currentProject.beschreibung">
+            <span class="info-label">Beschreibung</span>
+            {{ currentProject.beschreibung }}
+          </p>
+          <p class="info-row" *ngIf="currentProject.Team">
+            <span class="info-label">Team</span>
+            <strong>{{ currentProject.Team.name }}</strong>
+            <span *ngIf="currentProject.Team.klasse">
+              · {{ currentProject.Team.klasse }}</span
+            >
+          </p>
+          <p class="info-row" *ngIf="!currentProject.Team">
+            <span class="info-label">Team-ID</span>
+            <strong>{{ currentProject.teamId }}</strong>
+          </p>
+          <p class="info-row">
+            <span class="info-label">Präsentation</span>
+            {{ currentProject.praesentationsdatum | date: 'dd.MM.yyyy' }}
+          </p>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="evaluation-card">
+        <ion-card-header>
+          <span class="eyebrow">FEEDBACK</span>
+          <ion-card-title>Bisherige Bewertungen</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <p *ngIf="!currentProject.Evaluations?.length">
+            Noch keine Bewertungen vorhanden.
+          </p>
+
+          <div
+            class="evaluation"
+            *ngFor="let evaluation of currentProject.Evaluations ?? []"
+          >
+            <div class="evaluation-heading">
+              <h3>{{ evaluation.Criterion?.name || 'Kriterium' }}</h3>
+              <div class="score-badge">
+                <strong>{{ evaluation.score }}</strong>
+                <span>/ {{ evaluation.Criterion?.maxScore || 10 }}</span>
+              </div>
+            </div>
+            <p *ngIf="evaluation.comment">
+              <span class="info-label">Kommentar</span>
+              {{ evaluation.comment }}
+            </p>
+            <p *ngIf="evaluation.Juror">
+              <span class="info-label">Juror</span>
+              {{ evaluation.Juror.name }}
+            </p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
+  </div>
+</ion-content>

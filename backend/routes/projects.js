@@ -2,17 +2,27 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models');
 
-const { Project } = db;
+const { Project, Team, Evaluation, Criterion, Juror } = db;
 
 // alle Projekte
 router.get('/', async (req, res) => {
-  const projects = await Project.findAll();
+  const projects = await Project.findAll({
+    include: [Team]
+  });
   res.json(projects);
 });
 
 // ein Projekt per ID
 router.get('/:id', async (req, res) => {
-  const project = await Project.findByPk(req.params.id);
+  const project = await Project.findByPk(req.params.id, {
+    include: [
+      Team,
+      {
+        model: Evaluation,
+        include: [Criterion, Juror]
+      }
+    ]
+  });
 
   if (!project) {
     return res.status(404).json({ error: 'Projekt nicht gefunden' });

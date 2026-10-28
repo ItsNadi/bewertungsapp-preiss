@@ -1,0 +1,159 @@
+.page-content {
+  --xiao-bg: #10131c;
+  --xiao-card: #1a1f2c;
+  --xiao-card-soft: #202638;
+  --xiao-jade: #45d6c0;
+  --xiao-violet: #7657d9;
+  --xiao-text: #e8e5f2;
+  --xiao-muted: #a7a8b8;
+  min-height: 100%;
+  padding: 24px 16px 40px;
+  background:
+    radial-gradient(circle at 88% 4%, rgba(118, 87, 217, 0.2), transparent 30%),
+    radial-gradient(circle at 0% 35%, rgba(69, 214, 192, 0.08), transparent 26%),
+    var(--xiao-bg);
+}
+
+.intro {
+  margin: 4px 4px 22px;
+}
+
+.eyebrow {
+  color: var(--xiao-jade);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+h1 {
+  color: var(--xiao-text);
+  font-size: 1.7rem;
+  margin: 8px 0 4px;
+}
+
+.summary {
+  color: var(--xiao-muted);
+  margin: 0;
+}
+
+.state {
+  padding: 24px 8px;
+  text-align: center;
+}
+
+.error {
+  color: var(--ion-color-danger);
+}
+
+ion-list {
+  background: transparent;
+  padding: 0;
+}
+
+.project-item {
+  --background: linear-gradient(135deg, rgba(32, 38, 56, 0.98), rgba(25, 29, 42, 0.98));
+  --border-color: rgba(69, 214, 192, 0.22);
+  --color: var(--xiao-text);
+  --inner-padding-end: 20px;
+  --inner-padding-start: 20px;
+  --padding-bottom: 20px;
+  --padding-top: 20px;
+  border: 1px solid rgba(118, 87, 217, 0.28);
+  border-radius: 18px;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.24), 0 0 24px rgba(118, 87, 217, 0.08);
+  margin-bottom: 14px;
+  overflow: hidden;
+  transition: transform 160ms ease, border-color 160ms ease;
+}
+
+.project-item:active {
+  border-color: var(--xiao-jade);
+  transform: scale(0.985);
+}
+
+.project-heading {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+
+.project-heading h2 {
+  color: var(--xiao-text);
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.project-dot {
+  background: var(--xiao-jade);
+  border-radius: 50%;
+  box-shadow: 0 0 14px rgba(69, 214, 192, 0.8);
+  height: 8px;
+  width: 8px;
+}
+
+.project-item p {
+  color: var(--xiao-muted);
+  margin: 8px 0 0;
+}
+
+.team-badge {
+  background: rgba(69, 214, 192, 0.14);
+  border: 1px solid rgba(69, 214, 192, 0.3);
+  border-radius: 999px;
+  color: var(--xiao-jade);
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 4px 10px;
+}
+
+.class-name {
+  color: #c5baff;
+  font-size: 0.82rem;
+  margin-left: 8px;
+}
+
+.date-line {
+  color: #c1c2ce !important;
+  font-size: 0.86rem;
+}
+
+.team-fallback {
+  color: var(--xiao-muted);
+}
+
+.app-header ion-toolbar {
+  --background: linear-gradient(110deg, #171b29, #28203d);
+  --color: var(--xiao-text);
+  border-bottom: 1px solid rgba(69, 214, 192, 0.22);
+}
+
+.app-header ion-title {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+
+.brand-mark {
+  color: var(--xiao-jade);
+  font-size: 1.45rem;
+  text-shadow: 0 0 12px rgba(69, 214, 192, 0.8);
+}
+
+.title-copy {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.title-copy strong {
+  font-size: 1.05rem;
+}
+
+.title-copy small {
+  color: #b8b2d2;
+  font-size: 0.7rem;
+  font-weight: 400;
+  margin-top: 3px;
+}

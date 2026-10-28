@@ -1,0 +1,52 @@
+<ion-header class="app-header">
+  <ion-toolbar>
+    <ion-title>
+      <span class="brand-mark">✦</span>
+      <span class="title-copy">
+        <strong>Bewertungsapp</strong>
+        <small>Projektübersicht</small>
+      </span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="page-content">
+    <div class="intro" *ngIf="!loading() && !error()">
+      <span class="eyebrow">DEINE PROJEKTE</span>
+      <h1>Bewertung im Überblick</h1>
+      <p class="summary">{{ projects().length }} Projekt<span *ngIf="projects().length !== 1">e</span></p>
+    </div>
+
+    <p class="state" *ngIf="loading()">Projekte werden geladen ...</p>
+    <p class="state error" *ngIf="error()">{{ error() }}</p>
+
+    <p class="state" *ngIf="!loading() && !error() && projects().length === 0">
+      Noch keine Projekte vorhanden.
+    </p>
+
+    <ion-list class="project-list" *ngIf="!loading() && !error() && projects().length > 0">
+      <ion-item
+        class="project-item"
+        *ngFor="let project of projects()"
+        [routerLink]="['/project-detail', project.id]"
+        button
+        detail
+      >
+        <ion-label>
+          <div class="project-heading">
+            <span class="project-dot"></span>
+            <h2>{{ project.titel }}</h2>
+          </div>
+          <p *ngIf="project.Team">
+            <span class="team-badge">{{ project.Team.name }}</span>
+            <span class="class-name" *ngIf="project.Team.klasse">{{ project.Team.klasse }}</span>
+          </p>
+          <p class="team-fallback" *ngIf="!project.Team">Team-ID: {{ project.teamId }}</p>
+          <p *ngIf="project.beschreibung">{{ project.beschreibung }}</p>
+          <p class="date-line">⌁ Präsentation: {{ project.praesentationsdatum | date: 'dd.MM.yyyy' }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>
